@@ -9,34 +9,24 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.mykotlinapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() , View.OnClickListener {
 
-    lateinit var btnAdd: Button
-    lateinit var btnMinus: Button
-    lateinit var btnMultiply: Button
-    lateinit var btnDivide: Button
-    lateinit var etA: EditText
-    lateinit var etB: EditText
-    lateinit var resultTv: TextView
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
-        btnAdd = findViewById(R.id.btn_add)
-        btnMinus = findViewById(R.id.btn_minus)
-        btnMultiply = findViewById(R.id.btn_multiply)
-        btnDivide = findViewById(R.id.btn_divide)
-        etA = findViewById(R.id.et_a)
-        etB = findViewById(R.id.et_b)
-        resultTv = findViewById(R.id.result_tv)
 
-        btnAdd.setOnClickListener(this)
-        btnMinus.setOnClickListener(this)
-        btnMultiply.setOnClickListener(this)
-        btnDivide.setOnClickListener(this)
+
+        binding.btnAdd.setOnClickListener(this)
+        binding.btnMinus.setOnClickListener(this)
+        binding.btnMultiply.setOnClickListener(this)
+        binding.btnDivide.setOnClickListener(this)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -46,10 +36,10 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        var a = etA.text.toString().toDouble()
-        var b = etB.text.toString().toDouble()
+        var a = binding.etA.text.toString().toDouble()
+        var b = binding.etB.text.toString().toDouble()
         if (a == null || b == null) {
-            resultTv.text = "Please enter valid numbers"
+            binding.resultTv.text = "Please enter valid numbers"
             return
         }
         var result = 0.0
@@ -67,6 +57,6 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
                 result = a/b
             }
         }
-        resultTv.text = "Result: $result"
+        binding.resultTv.text = "Result: $result"
     }
 }

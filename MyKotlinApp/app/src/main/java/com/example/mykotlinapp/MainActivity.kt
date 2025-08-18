@@ -47,7 +47,11 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
 
     override fun onClick(v: View?) {
         var a = etA.text.toString().toDouble()
-        var b = etA.text.toString().toDouble()
+        var b = etB.text.toString().toDouble()
+        if (a == null || b == null) {
+            resultTv.text = "Please enter valid numbers"
+            return
+        }
         var result = 0.0
         when(v?.id){
             R.id.btn_add -> {

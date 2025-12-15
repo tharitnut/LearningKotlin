@@ -1,67 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_margin="30dp"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="match_parent"
+    <FrameLayout
+        android:id="@+id/headerContainer"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:id="@+id/et_a"
-        android:layout_margin="4dp"
-        android:hint="Enter a"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:id="@+id/et_b"
-        android:layout_margin="4dp"
-        android:hint="Enter b"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fitsSystemWindows="true">
 
-        <Button
-            android:id="@+id/btn_add"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/tvHeader"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:text="+" />
-        <Button
-            android:id="@+id/btn_minus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:text="-" />
-        <Button
-            android:id="@+id/btn_multiply"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:text="*" />
-        <Button
-            android:id="@+id/btn_divide"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:text="/" />
+            android:text="🍕 Menu Items"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingStart="32dp"
+            android:paddingEnd="16dp"
+            android:background="#FFC107" />
+    </FrameLayout>
 
-    </LinearLayout>
-    
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Result"
-        android:layout_margin="20dp"
-        android:textSize="24sp"
-        android:id="@+id/result_tv"
-        android:gravity="center"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:layoutAnimation="@anim/layout_animation"
+        android:paddingTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerContainer"
+        app:layout_constraintVertical_bias="1.0" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

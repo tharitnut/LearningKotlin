@@ -1,62 +1,120 @@
 package com.example.mykotlinapp
 
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.mykotlinapp.databinding.ActivityMainBinding
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
-class MainActivity : AppCompatActivity() , View.OnClickListener {
+class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMainBinding
+    private lateinit var imageId: Array<Int>
+    private lateinit var name: Array<String>
+    private lateinit var ingredients: Array<String>
+    private lateinit var price: DoubleArray
+
+    private lateinit var recView: RecyclerView
+    private lateinit var itemArrayList: ArrayList<Pizza>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        enableEdgeToEdge()
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
 
+        imageId = arrayOf(
+            R.drawable.pizza1,
+            R.drawable.pizza2,
+            R.drawable.pizza3,
+            R.drawable.pizza4,
+            R.drawable.pizza5,
+            R.drawable.pizza6,
+            R.drawable.pizza1,
+            R.drawable.pizza2,
+            R.drawable.pizza3,
+            R.drawable.pizza4,
+            R.drawable.pizza5,
+            R.drawable.pizza6,
+            R.drawable.pizza1,
+            R.drawable.pizza2,
+            R.drawable.pizza3,
+            R.drawable.pizza4,
+            R.drawable.pizza5,
+            R.drawable.pizza6,
+            R.drawable.pizza1,
+            R.drawable.pizza2
+        )
 
+        name = arrayOf(
+            "Mushroom & Garlic",
+            "Classic Veggie Supreme",
+            "Spicy BBQ Chicken",
+            "Avocado Chicken Delight",
+            "Authentic Margherita",
+            "The Works Supreme",
+            "Mushroom & Garlic",
+            "Classic Veggie Supreme",
+            "Spicy BBQ Chicken",
+            "Avocado Chicken Delight",
+            "Authentic Margherita",
+            "The Works Supreme",
+            "Mushroom & Garlic",
+            "Classic Veggie Supreme",
+            "Spicy BBQ Chicken",
+            "Avocado Chicken Delight",
+            "Authentic Margherita",
+            "The Works Supreme",
+            "Mushroom & Garlic",
+            "Classic Veggie Supreme"
+        )
 
-        binding.btnAdd.setOnClickListener(this)
-        binding.btnMinus.setOnClickListener(this)
-        binding.btnMultiply.setOnClickListener(this)
-        binding.btnDivide.setOnClickListener(this)
+        ingredients = arrayOf(
+            "Ingredients: Mushrooms, Fresh Basil, Garlic oil, Mozzarella.",
+            "Ingredients: Bell Peppers, Onions, Black Olives, Mozzarella, Tomato Sauce.",
+            "Ingredients: Chicken chunks, BBQ sauce, Red Peppers, Jalapeños.",
+            "Ingredients: BBQ Chicken, Red Onion, Avocado/Pesto, Drizzle.",
+            "Ingredients: Fresh Basil, Large Buffalo Mozzarella Rounds, Tomato Sauce.",
+            "Ingredients: Pepperoni, Sausage, Olives, Peppers, Red Onion.",
+            "Ingredients: Mushrooms, Fresh Basil, Garlic oil, Mozzarella.",
+            "Ingredients: Bell Peppers, Onions, Black Olives, Mozzarella, Tomato Sauce.",
+            "Ingredients: Chicken chunks, BBQ sauce, Red Peppers, Jalapeños.",
+            "Ingredients: BBQ Chicken, Red Onion, Avocado/Pesto, Drizzle.",
+            "Ingredients: Fresh Basil, Large Buffalo Mozzarella Rounds, Tomato Sauce.",
+            "Ingredients: Pepperoni, Sausage, Olives, Peppers, Red Onion.",
+            "Ingredients: Mushrooms, Fresh Basil, Garlic oil, Mozzarella.",
+            "Ingredients: Bell Peppers, Onions, Black Olives, Mozzarella, Tomato Sauce.",
+            "Ingredients: Chicken chunks, BBQ sauce, Red Peppers, Jalapeños.",
+            "Ingredients: BBQ Chicken, Red Onion, Avocado/Pesto, Drizzle.",
+            "Ingredients: Fresh Basil, Large Buffalo Mozzarella Rounds, Tomato Sauce.",
+            "Ingredients: Pepperoni, Sausage, Olives, Peppers, Red Onion.",
+            "Ingredients: Mushrooms, Fresh Basil, Garlic oil, Mozzarella.",
+            "Ingredients: Bell Peppers, Onions, Black Olives, Mozzarella, Tomato Sauce."
+        )
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        price = doubleArrayOf(
+            13.00, 14.50, 15.99, 17.50, 12.00, 16.75,
+            13.00, 14.50, 15.99, 17.50, 12.00, 16.75,
+            13.00, 14.50, 15.99, 17.50, 12.00, 16.75,
+            13.00, 14.50
+        )
+
+        recView = findViewById(R.id.recView)
+        recView.layoutManager = GridLayoutManager(
+            this, 2
+        )
+        recView.setHasFixedSize(true)
+
+        itemArrayList = arrayListOf<Pizza>()
+
+        getData()
+
+        recView.adapter = RecAdapter(itemArrayList)
+    }
+
+    private fun getData() {
+        for (i in imageId.indices) {
+            val pizza = Pizza(imageId[i], name[i], ingredients[i], price[i])
+            itemArrayList.add(pizza)
         }
     }
 
-    override fun onClick(v: View?) {
-        var a = binding.etA.text.toString().toDouble()
-        var b = binding.etB.text.toString().toDouble()
-        if (a == null || b == null) {
-            binding.resultTv.text = "Please enter valid numbers"
-            return
-        }
-        var result = 0.0
-        when(v?.id){
-            R.id.btn_add -> {
-                result = a+b
-            }
-            R.id.btn_minus -> {
-                result = a-b
-            }
-            R.id.btn_multiply -> {
-                result = a*b
-            }
-            R.id.btn_divide -> {
-                result = a/b
-            }
-        }
-        binding.resultTv.text = "Result: $result"
-    }
 }
